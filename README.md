@@ -1,2 +1,2 @@
 # G2PathSmoothing
-A paper to TIV. The soucecode will be released soon.
+A paper to TIV. The souce code will be released soon.
