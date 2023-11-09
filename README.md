@@ -28,10 +28,10 @@ These methods can be **executed individually**, to understand the effects of eac
  ## Demos
  These demos demonstrate the processes path smoothing.
  
- <img src="https://github.com/LiuXuSIA/G2PathSmoothing/blob/main/Demos/path%20generation%20and%20smoothing.gif" width="320"/> <img src="https://github.com/LiuXuSIA/G2PathSmoothing/blob/main/Demos/path%20smoothing.gif" width="395"/> 
+ <img src="https://github.com/LiuXuSIA/G2PathSmoothing/blob/main/Demos/path%20generation%20and%20smoothing.gif" width="320"/> <img src="https://github.com/LiuXuSIA/G2PathSmoothing/blob/main/Demos/path%20smoothing.gif" width="320"/> 
  
-path smoothing (left) and path adjusting (right)
+path generation (left) and path adjusting (right)
  
 ## License
-Our code is licensed under [Apache License 2.0](https://github.com/SS47816/fiss_planner/blob/main/LICENSE) 
+Our code is licensed under [Apache License 2.0](https://github.com/LiuXuSIA/G2PathSmoothing/blob/main/LICENSE) 
 
