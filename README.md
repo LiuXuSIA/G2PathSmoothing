@@ -28,7 +28,7 @@ These methods can be **executed individually**, to understand the effects of eac
  ## Demos
  These demos demonstrate the processes path smoothing.
  
- <img src="https://github.com/LiuXuSIA/GECB_Planner/blob/master/demos/path_generation.gif?raw=true" width="320"/> <img src="https://github.com/LiuXuSIA/GECB_Planner/blob/master/demos/path_smoothing.gif?raw=true" width="395"/> 
+ <img src="https://github.com/LiuXuSIA/G2PathSmoothing/blob/main/Demos/path%20generation%20and%20smoothing.gif" width="320"/> <img src="https://github.com/LiuXuSIA/G2PathSmoothing/blob/main/Demos/path%20smoothing.gif" width="395"/> 
  
 path smoothing (left) and path adjusting (right)
  
