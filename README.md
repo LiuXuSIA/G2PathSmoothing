@@ -28,7 +28,7 @@ These methods can be **executed individually**, to understand the effects of eac
  ## Demos
  These demos demonstrate the processes path smoothing.
  
- <img src="https://github.com/LiuXuSIA/G2PathSmoothing/blob/main/Demos/path%20generation%20and%20smoothing.gif" width="320"/> <img src="https://github.com/LiuXuSIA/G2PathSmoothing/blob/main/Demos/path%20smoothing.gif" width="320"/> 
+ <img src="https://github.com/LiuXuSIA/G2PathSmoothing/blob/main/Demos/path%20generation%20and%20smoothing.gif" width="320"/> <img src="https://github.com/LiuXuSIA/G2PathSmoothing/blob/main/Demos/path%20smoothing.gif" width="350"/> 
  
 path generation (left) and path adjusting (right)
  
