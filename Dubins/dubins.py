@@ -1,16 +1,6 @@
-"""
-
-Dubins path planner sample code
-
-author Atsushi Sakai(@Atsushi_twi)
-
-"""
-import math
-
 import matplotlib.pyplot as plt
 import numpy as np
 from scipy.spatial.transform import Rotation as Rot
-import pcdProcess
 import random
 import math
 
@@ -353,58 +343,23 @@ def generate_path(rx, ry, ds, curvature):
 
     return np.array(trajs)
 
-def main():
-    print("Dubins path planner sample start!!")
-
-    start_x = 1.0  # [m]
-    start_y = 1.0  # [m]
-    start_yaw = np.deg2rad(45.0)  # [rad]
-
-    end_x = -3.0  # [m]
-    end_y = -3.0  # [m]
-    end_yaw = np.deg2rad(-45.0)  # [rad]
-
-    curvature = 1.0
-
-    path_x, path_y, path_yaw, mode, lengths = dubins_path_planning(start_x,
-                                                                   start_y,
-                                                                   start_yaw,
-                                                                   end_x,
-                                                                   end_y,
-                                                                   end_yaw,
-                                                                   curvature)
-
-    print(np.array(path_x).shape, np.array(path_y).shape, np.array(path_yaw).shape, mode, lengths)
-
-    if show_animation:
-        plt.plot(path_x, path_y, label="final course " + "".join(mode))
-
-        # plotting
-        plot_arrow(start_x, start_y, start_yaw)
-        plot_arrow(end_x, end_y, end_yaw)
-
-        plt.legend()
-        plt.grid(True)
-        plt.axis("equal")
-        plt.show()
-
+def loadData(filePath):
+    Data = []
+    fr = open(filePath)
+    initialData = fr.readlines()
+    fr.close()
+    for element in initialData:
+        lineArr = element.strip().split(' ')
+        Data.append([float(x) for x in lineArr])
+    return np.array(Data)
 
 if __name__ == '__main__':
-    # main()
-    rootPath_TITS = 'F:\\PC2Win10\\Study\\PHD\\Research\\paper_writting\\TITS2023\\'
-    result_hill = rootPath_TITS + 'results\\hill\\result_hill.txt'
-    point_quarry_Astar = rootPath_TITS + 'results\\quarry\\point_quarry_Astar.txt'
-    point_sia_hill_Astar = rootPath_TITS + 'results\\hill\\point_sia_hill_Astar.txt'
     
-    points = pcdProcess.loadData(point_sia_hill_Astar)
-    rx, ry = points[:, 0], points[:, 1]
-    curvature = 3.0
+    point_hill = 'pathPoints\\point_hill.txt'
 
-    # trajs = generate_path(rx, ry,curvature)
-    # plt.figure(figsize=(10, 10))
-    # plt.scatter(trajs[:,0], trajs[:,1], c='r',s=10)
-    # plt.plot(trajs[:,0], trajs[:,1], c='g')
-    # plt.show()
+    road_points = loadData(point_hill)
+    rx, ry = road_points[:, 0], road_points[:, 1]
+    curvature = 3.0
 
     path = generate_path(rx, ry, 0.01, curvature)
     plt.figure()
@@ -414,8 +369,8 @@ if __name__ == '__main__':
     ax.spines['top'].set_linewidth(2.2)
     ax.spines['right'].set_linewidth(2.2)
     plt.title('dubins', fontsize = 15)
-    plt.plot(path[:,0]*5, path[:,1]*5,linewidth=4, c='darkorange',label='trajectory')
-    plt.scatter(rx*5, ry*5,c='g',s=40, label='path points')
+    plt.plot(path[:,0], path[:,1],linewidth=4, c='darkorange',label='trajectory')
+    plt.scatter(rx, ry,c='g',s=40, label='path points')
     plt.xticks(fontsize = 18)
     plt.yticks(fontsize = 18)
     plt.legend(fontsize = 18)

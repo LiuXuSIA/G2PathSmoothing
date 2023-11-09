@@ -1,11 +1,3 @@
-"""
-Clothoid Path Planner
-Author: Daniel Ingram (daniel-s-ingram)
-        Atsushi Sakai (AtsushiSakai)
-Reference paper: Fast and accurate G1 fitting of clothoid curves
-https://www.researchgate.net/publication/237062806
-"""
-
 from collections import namedtuple
 import matplotlib.pyplot as plt
 import numpy as np
@@ -13,7 +5,6 @@ import scipy.integrate as integrate
 from scipy.optimize import fsolve
 from math import atan2, cos, hypot, pi, sin
 from matplotlib import animation
-import pcdProcess
 import random
 import math
 
@@ -196,40 +187,25 @@ def generate_final_path(rx, ry, ds):
 
     return np.array(trajs)
 
-
-def main():
-    start_point = Point(0, 0)
-    start_orientation_list = [0.0]
-    goal_point = Point(10, 0)
-    goal_orientation_list = np.linspace(-pi, pi, 75)
-    num_path_points = 100
-    clothoid_paths = generate_clothoid_paths(
-        start_point, start_orientation_list,
-        goal_point, goal_orientation_list,
-        num_path_points)
-    if show_animation:
-        draw_clothoids(start_point, goal_point,
-                       num_path_points, clothoid_paths,
-                       save_animation=False)
-
+def loadData(filePath):
+    Data = []
+    fr = open(filePath)
+    initialData = fr.readlines()
+    fr.close()
+    for element in initialData:
+        lineArr = element.strip().split(' ')
+        Data.append([float(x) for x in lineArr])
+    return np.array(Data)
 
 if __name__ == '__main__':
-    # main()
-    rootPath_TITS = 'F:\\PC2Win10\\Study\\PHD\\Research\\paper_writting\\TITS2023\\'
-    result_hill = rootPath_TITS + 'results\\hill\\result_hill.txt'
-    point_quarry_Astar = rootPath_TITS + 'results\\quarry\\point_quarry_Astar.txt'
-    point_sia_hill_Astar = rootPath_TITS + 'results\\hill\\point_sia_hill_Astar.txt'
-    
-    points = pcdProcess.loadData(point_sia_hill_Astar)
-    rx, ry = points[:, 0], points[:, 1]
 
-    # trajs = generate_final_path(rx, ry)
-    # plt.figure(figsize=(10, 10))
-    # plt.scatter(trajs[:,0], trajs[:,1], c='r',s=10)
-    # plt.plot(trajs[:,0], trajs[:,1], c='g')
-    # plt.show()
+    point_hill = 'pathPoints\\point_hill.txt'
+
+    road_points = loadData(point_hill)
+    rx, ry = road_points[:, 0], road_points[:, 1]
 
     path = generate_final_path(rx, ry, 0.01)
+    
     plt.figure()
     ax=plt.gca()
     ax.spines['bottom'].set_linewidth(2.2)

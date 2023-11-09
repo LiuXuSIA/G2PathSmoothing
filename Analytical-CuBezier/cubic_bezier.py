@@ -1,7 +1,6 @@
 import numpy as np
 import scipy.special
 import matplotlib.pyplot as plt
-import pcdProcess
 
 def calc_bezier_path(control_points, ds=0.01):
         traj = []
@@ -138,14 +137,21 @@ def pathsmoothbezier(wayPointsX, wayPointsY, ds, *varargin):
 
     return np.c_[X, Y, Z]
 
-if __name__ == "__main__":
-    rootPath_TITS = 'F:\\PC2Win10\\Study\\PHD\\Research\\paper_writting\\TITS2023\\'
-    result_hill = rootPath_TITS + 'results\\hill\\result_hill.txt'
-    point_quarry_Astar = rootPath_TITS + 'results\\quarry\\point_quarry_Astar.txt'
-    point_sia_hill_Astar = rootPath_TITS + 'results\\hill\\point_sia_hill_Astar.txt'
-    point_planet_Astar = rootPath_TITS + 'results\\planet\\point_planet_Astar.txt'
+def loadData(filePath):
+    Data = []
+    fr = open(filePath)
+    initialData = fr.readlines()
+    fr.close()
+    for element in initialData:
+        lineArr = element.strip().split(' ')
+        Data.append([float(x) for x in lineArr])
+    return np.array(Data)
 
-    road_points = pcdProcess.loadData(point_sia_hill_Astar)
+if __name__ == "__main__":
+
+    point_hill = 'pathPoints\\point_hill.txt'
+
+    road_points = loadData(point_hill)
 
     fx = road_points[:, 0]
     fy = road_points[:, 1]
@@ -162,9 +168,9 @@ if __name__ == "__main__":
     ax.spines['left'].set_linewidth(2.2)
     ax.spines['top'].set_linewidth(2.2)
     ax.spines['right'].set_linewidth(2.2)
-    # plt.title('analytical cubic Bezier', fontsize = 15)
-    plt.plot(path[:,0]*5, path[:,1]*5,linewidth=4, c='darkorange',label='trajectory')
-    plt.scatter(fx*5, fy*5,c='g',s=40, label='path points')
+    plt.title('analytical cubic Bezier', fontsize = 15)
+    plt.plot(path[:,0], path[:,1],linewidth=4, c='darkorange',label='trajectory')
+    plt.scatter(fx, fy,c='g',s=40, label='path points')
     # plt.plot(fx, fy,c='gray',label='path',linewidth=3)
     plt.xticks(fontsize = 18)
     plt.yticks(fontsize = 18)

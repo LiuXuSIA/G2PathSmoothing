@@ -1,14 +1,7 @@
-"""
-Cubic spline planner
-
-Author: Atsushi Sakai(@Atsushi_twi)
-
-"""
 import math
 import numpy as np
 import bisect
 import matplotlib.pyplot as plt
-import pcdProcess
 
 class Spline:
     """
@@ -189,77 +182,26 @@ def calc_spline_course(x, y, ds=0.1):
 
     return np.c_[rx, ry], ryaw, rk, s
 
-def main():  # pragma: no cover
-    print("Spline 2D test")
-    
-    x = [-2.5, 0.0, 2.5, 5.0, 7.5, 3.0, -1.0]
-    y = [0.7, -6, 5, 6.5, 0.0, 5.0, -2.0]
-    # x = road_points[:, 0].tolist()
-    # y = road_points[:, 1].tolist()
-
-    ds = 0.1  # [m] distance of each interpolated points
-
-    sp = Spline2D(x, y)
-    s = np.arange(0, sp.s[-1], ds)
-
-    rx, ry, ryaw, rk = [], [], [], []
-    for i_s in s:
-        ix, iy = sp.calc_position(i_s)
-        rx.append(ix)
-        ry.append(iy)
-        ryaw.append(sp.calc_yaw(i_s))
-        rk.append(sp.calc_curvature(i_s))
-
-    plt.subplots(1)
-    plt.plot(x, y, "xb", label="input")
-    plt.plot(rx, ry, "-r", label="spline")
-    plt.grid(True)
-    plt.axis("equal")
-    plt.xlabel("x[m]")
-    plt.ylabel("y[m]")
-    plt.legend()
-
-    plt.subplots(1)
-    plt.plot(s, [np.rad2deg(iyaw) for iyaw in ryaw], "-r", label="yaw")
-    plt.grid(True)
-    plt.legend()
-    plt.xlabel("line length[m]")
-    plt.ylabel("yaw angle[deg]")
-
-    plt.subplots(1)
-    plt.plot(s, rk, "-r", label="curvature")
-    plt.grid(True)
-    plt.legend()
-    plt.xlabel("line length[m]")
-    plt.ylabel("curvature [1/m]")
-
-    plt.show()
-
+def loadData(filePath):
+    Data = []
+    fr = open(filePath)
+    initialData = fr.readlines()
+    fr.close()
+    for element in initialData:
+        lineArr = element.strip().split(' ')
+        Data.append([float(x) for x in lineArr])
+    return np.array(Data)
 
 if __name__ == '__main__':
-    main()
 
-    rootPath_TITS = 'F:\\PC2Win10\\Study\\PHD\\Research\\paper_writting\\TITS2023\\'
-    result_hill = rootPath_TITS + 'results\\hill\\result_hill.txt'
-    point_quarry_Astar = rootPath_TITS + 'results\\quarry\\point_quarry_Astar.txt'
-    point_sia_hill_Astar = rootPath_TITS + 'results\\hill\\point_sia_hill_Astar.txt'
-    point_planet_Astar = rootPath_TITS + 'results\\planet\\point_planet_Astar.txt'
+    point_hill = 'pathPoints\\point_hill.txt'
 
-    road_points = pcdProcess.loadData(point_sia_hill_Astar)
+    road_points = loadData(point_hill)
 
     x = road_points[:, 0]
     y = road_points[:, 1]
 
     path, ryaw, rk, _ = calc_spline_course(x, y, ds=0.1)
-
-    # plt.plot(x, y, "xb", label="input")
-    # plt.plot(path[:,0], path[:,1], "-r", label="spline")
-    # plt.grid(True)
-    # plt.axis("equal")
-    # plt.xlabel("x[m]")
-    # plt.ylabel("y[m]")
-    # plt.legend()
-    # plt.show()
 
     path, ryaw, rk, _ = calc_spline_course(x, y, ds=0.1)
     plt.figure()
@@ -268,9 +210,9 @@ if __name__ == '__main__':
     ax.spines['left'].set_linewidth(2.2)
     ax.spines['top'].set_linewidth(2.2)
     ax.spines['right'].set_linewidth(2.2)
-    # plt.title('cubic spline', fontsize = 15)
-    plt.plot(path[:,0]*5, path[:,1]*5,linewidth=4, c='darkorange',label='trajectory')
-    plt.scatter(x*5, y*5,c='g',s=40, label='path points')
+    plt.title('cubic spline', fontsize = 15)
+    plt.plot(path[:,0], path[:,1],linewidth=4, c='darkorange',label='trajectory')
+    plt.scatter(x, y,c='g',s=40, label='path points')
     plt.xticks(fontsize = 18)
     plt.yticks(fontsize = 18)
     plt.legend(fontsize = 18)
